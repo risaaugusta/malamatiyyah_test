@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:r_muslim/screens/surah_screen.dart';
 import 'package:r_muslim/style/style.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
           _titles[_selectedIndex],
           style: const TextStyle(
               color: Colors.black,
-              fontFamily: Fonts.POPPINS_BOLD,
+              fontFamily: Fonts.POPPINS,
               fontSize: 24,
               fontWeight: FontWeight.w900),
         ),
@@ -56,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         automaticallyImplyLeading: false,
       ),
-      body: Center(
+      body:  _selectedIndex == 0 ? const SurahScreen() : Center(
         child: Text(
           'Content for ${_titles[_selectedIndex]}',  
           style: TextStyle(fontSize: 24),

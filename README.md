@@ -1,4 +1,4 @@
-# r_muslim
+# Malamatiyyah App
  
 Islamic app for recruitment test purpose ©Risa Augusta Murti
  

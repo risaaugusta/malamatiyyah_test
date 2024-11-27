@@ -6,7 +6,6 @@ part 'surah_event.dart';
 part 'surah_state.dart';
 
 class SurahBloc extends Bloc<SurahEvent, SurahState> {
-  // Tidak perlu Dio lagi, karena fetchAllSurat sudah menggunakan Dio
   SurahBloc() : super(SurahInitial());
 
   @override
@@ -14,7 +13,6 @@ class SurahBloc extends Bloc<SurahEvent, SurahState> {
     if (event is FetchSurahEvent) {
       yield SurahLoading();
       try {
-        // Menggunakan fungsi fetchAllSurat dari api_services.dart
         final List<DataListSurah> listSurat = await fetchAllSurat();
 
         if (listSurat.isNotEmpty) {

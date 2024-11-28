@@ -10,20 +10,21 @@ class ListSurahModel {
   });
 
   factory ListSurahModel.fromJson(Map<String, dynamic> json) => ListSurahModel(
-      code: json["code"],
-      message: json["message"],
-      data: json["data"] == null
-          ? []
-          : List<DataListSurah>.from(
-              json["responseData"]!.map((x) => DataListSurah.fromJson(x))));
+    code: json["code"],
+    message: json["message"],
+    data: json["data"] == null
+        ? []
+        : List<DataListSurah>.from(
+            json["data"]!.map((x) => DataListSurah.fromJson(x))),
+  );
 
   Map<String, dynamic> toJson() => {
-        "code": code,
-        "message": message,
-        "data": data.isEmpty
-            ? []
-            : List<dynamic>.from(data.map((x) => x.toJson())),
-      };
+    "code": code,
+    "message": message,
+    "data": data.isEmpty
+        ? []
+        : List<dynamic>.from(data.map((x) => x.toJson())),
+  };
 }
 
 class DataListSurah {

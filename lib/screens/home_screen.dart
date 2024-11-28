@@ -1,7 +1,11 @@
+// home_screen.dart
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:r_muslim/screens/surah_screen.dart';
 import 'package:r_muslim/style/style.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:r_muslim/bloc/surah/surah_bloc.dart'; // Pastikan import Bloc
+import 'package:r_muslim/services/surah_api_services.dart';
+import 'package:flutter_svg/flutter_svg.dart'; // Pastikan api service sudah ada
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -57,16 +61,22 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         automaticallyImplyLeading: false,
       ),
-      body:  _selectedIndex == 0 ? const SurahScreen() : Center(
-        child: Text(
-          'Content for ${_titles[_selectedIndex]}',  
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
+      body: _selectedIndex == 0
+          // ? BlocProvider(
+          //     create: (context) => SurahBloc(SurahApiServices())..add(FetchSurahEvent()),
+          //     child: const SurahScreen(),
+          //   )
+          ? const SurahScreen()
+          : Center(
+              child: Text(
+                'Content for ${_titles[_selectedIndex]}',
+                style: TextStyle(fontSize: 24),
+              ),
+            ),
       bottomNavigationBar: BottomNavigationBar(
-        useLegacyColorScheme: false,   
-        backgroundColor: Colors.white,  
-        elevation: 5, 
+        useLegacyColorScheme: false,
+        backgroundColor: Colors.white,
+        elevation: 5,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         selectedItemColor: Coloring.primary,

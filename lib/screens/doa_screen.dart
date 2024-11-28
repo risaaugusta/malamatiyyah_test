@@ -5,8 +5,8 @@ import 'package:r_muslim/services/surah_api_services.dart';
 import 'package:r_muslim/bloc/surah/surah_bloc.dart';
 import 'package:r_muslim/style/style.dart';
 
-class SurahScreen extends StatelessWidget {
-  const SurahScreen({super.key});
+class DoaScreen extends StatelessWidget {
+  const DoaScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class SurahScreen extends StatelessWidget {
                   ),
                 ),
                 child: const Text(
-                  'Qur\'an',
+                  'Doa',
                   style: TextStyle(
                     fontSize: 16,
                     fontFamily: Fonts.POPPINS,
@@ -44,7 +44,7 @@ class SurahScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               const Text(
-                'Surah',
+                'Doa',
                 style: TextStyle(
                   fontSize: 16,
                   fontFamily: Fonts.POPPINS,

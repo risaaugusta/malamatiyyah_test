@@ -1,6 +1,7 @@
 // home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:r_muslim/screens/doa_screen.dart';
 import 'package:r_muslim/screens/surah_screen.dart';
 import 'package:r_muslim/style/style.dart';
 import 'package:r_muslim/bloc/surah/surah_bloc.dart'; // Pastikan import Bloc
@@ -32,8 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.amber,
       appBar: AppBar(
         leading: null,
-        title: Text(
-          _titles[_selectedIndex],
+        title: const Text(
+          // _titles[_selectedIndex],
+          'Malamatiyyah',
           style: const TextStyle(
               color: Colors.black,
               fontFamily: Fonts.POPPINS,
@@ -61,12 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         automaticallyImplyLeading: false,
       ),
-      body: _selectedIndex == 0
-          // ? BlocProvider(
-          //     create: (context) => SurahBloc(SurahApiServices())..add(FetchSurahEvent()),
-          //     child: const SurahScreen(),
-          //   )
+      body: _selectedIndex == 0 
           ? const SurahScreen()
+          : _selectedIndex == 1
+          ? const DoaScreen()
           : Center(
               child: Text(
                 'Content for ${_titles[_selectedIndex]}',

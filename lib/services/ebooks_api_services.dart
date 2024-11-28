@@ -5,7 +5,7 @@ import 'package:r_muslim/models/ebooks_model.dart';
 class EbooksApiServices {
   final Dio _dio = Dio();
 
-  Future<List<DataEbooks>> fetchAllSurat() async {
+  Future<List<DataEbooks>> fetchAllEbooks() async {
   try {
     final response = await _dio.get('https://api3.islamhouse.com/v3/paV29H2gm56kvLPy/main/books/id/id/1/25/json');
 
@@ -22,11 +22,11 @@ class EbooksApiServices {
       }
     } else {
       print('Response tidak valid: ${response.statusCode}');
-      throw Exception('Failed to load surah data, status code: ${response.statusCode}');
+      throw Exception('Failed to load data, status code: ${response.statusCode}');
     }
   } catch (e) {
     print('Error fetching data: $e');
-    throw Exception('Failed to load surah data: $e');
+    throw Exception('Failed to load data: $e');
   }
 }
 

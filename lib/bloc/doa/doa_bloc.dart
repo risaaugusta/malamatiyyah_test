@@ -6,18 +6,18 @@ part 'doa_event.dart';
 part 'doa_state.dart';
 
 class DoaBloc extends Bloc<DoaEvent, DoaState> {
-  final DoaApiServices _surahApiServices;
+  final DoaApiServices _doaApiServices;
 
-  DoaBloc(this._surahApiServices) : super(DoaInitial()) {
+  DoaBloc(this._doaApiServices) : super(DoaInitial()) {
     on<FetchDoaEvent>((event, emit) async {
       try {
         emit(DoaLoading());
-        final List<DoaModel> listDoa = await _surahApiServices.fetchAllDoa();
+        final List<DoaModel> listDoa = await _doaApiServices.fetchAllDoa();
 
         if (listDoa.isNotEmpty) {
           emit(DoaLoaded(listDoa));
         } else {
-          emit(DoaError("Tidak ada data surat."));
+          emit(DoaError("Tidak ada data"));
         }
       } catch (e) {
         emit(DoaError("Terjadi kesalahan: $e"));

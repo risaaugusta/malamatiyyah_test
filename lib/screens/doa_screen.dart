@@ -66,10 +66,10 @@ class DoaScreen extends StatelessWidget {
                       ),
                     );
                   } else if (state is DoaLoaded) {
-                    List<DoaModel> listSurat = state.listDoa;
+                    List<DoaModel> listDoa = state.listDoa;
                     return Expanded(
                       child: ListView.builder(
-                        itemCount: listSurat.length,
+                        itemCount: listDoa.length,
                         itemBuilder: (context, index) {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -90,7 +90,7 @@ class DoaScreen extends StatelessWidget {
                                 //   child: Text('${index + 1}'),
                                 // ),
                                 title: Text(
-                                  listSurat[index].nama,
+                                  listDoa[index].nama,
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontFamily: Fonts.POPPINS,
@@ -106,7 +106,7 @@ class DoaScreen extends StatelessWidget {
                                 //     borderRadius: BorderRadius.circular(20),
                                 //   ),
                                 //   child: Text(
-                                //     listSurat[index].tag,
+                                //     listDoa[index].tag,
                                 //     style: const TextStyle(
                                 //       fontSize: 12,
                                 //       fontFamily: Fonts.POPPINS,
@@ -116,7 +116,7 @@ class DoaScreen extends StatelessWidget {
                                 // ),
                               ),
                               Text(
-                                listSurat[index].ar,
+                                listDoa[index].ar,
                                 textAlign: TextAlign.right,
                                 style: const TextStyle(
                                     fontSize: 20,
@@ -125,7 +125,7 @@ class DoaScreen extends StatelessWidget {
                                     fontWeight: FontWeight.w700),
                               ),
                               Text(
-                                listSurat[index].tr,
+                                listDoa[index].tr,
                                 textAlign: TextAlign.left,
                                 style: const TextStyle(
                                     fontSize: 12,
@@ -133,13 +133,13 @@ class DoaScreen extends StatelessWidget {
                                     color: Colors.black),
                               ),
                               Text(
-                                'Arti: "${listSurat[index].idn}"',
+                                'Arti: "${listDoa[index].idn}"',
                                 style: const TextStyle(
                                     fontSize: 12,
                                     fontFamily: Fonts.POPPINS,
                                     color: Coloring.tertiary),
                               ),
-                              listSurat[index].tag != ''
+                              listDoa[index].tag != ''
                                   ? Container(
                                       margin: const EdgeInsets.symmetric(
                                           vertical: 12),
@@ -152,7 +152,7 @@ class DoaScreen extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(20),
                                       ),
                                       child: Text(
-                                        listSurat[index].tag,
+                                        listDoa[index].tag,
                                         style: const TextStyle(
                                           fontSize: 12,
                                           fontFamily: Fonts.POPPINS,
@@ -161,7 +161,7 @@ class DoaScreen extends StatelessWidget {
                                       ),
                                     )
                                   : Container(),
-                              if (index < listSurat.length - 1) const Divider(),
+                              if (index < listDoa.length - 1) const Divider(),
                             ],
                           );
                         },

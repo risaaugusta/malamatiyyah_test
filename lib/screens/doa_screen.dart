@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:r_muslim/models/list_surah_model.dart';
-import 'package:r_muslim/services/surah_api_services.dart';
-import 'package:r_muslim/bloc/surah/surah_bloc.dart';
+import 'package:r_muslim/models/doa_model.dart';
+import 'package:r_muslim/services/doa_api_services.dart';
+import 'package:r_muslim/bloc/doa/doa_bloc.dart';
 import 'package:r_muslim/style/style.dart';
 
 class DoaScreen extends StatelessWidget {
@@ -11,8 +11,7 @@ class DoaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SurahBloc(SurahApiServices())
-        ..add(FetchSurahEvent()), // Menambahkan event FetchSurahEvent
+      create: (context) => DoaBloc(DoaApiServices())..add(FetchDoaEvent()),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
@@ -26,10 +25,8 @@ class DoaScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/banner-quran.png'), // Ganti dengan path gambar Anda
-                    fit: BoxFit
-                        .fill, // Mengatur bagaimana gambar memenuhi area Container
+                    image: AssetImage('assets/images/banner-quran.png'),
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: const Text(
@@ -52,109 +49,118 @@ class DoaScreen extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              const Divider(
+                thickness: 3,
+                color: Coloring.primary,
+              ),
               const SizedBox(height: 10),
-              BlocBuilder<SurahBloc, SurahState>(
+              BlocBuilder<DoaBloc, DoaState>(
                 builder: (context, state) {
-                  if (state is SurahLoading) {
+                  if (state is DoaLoading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (state is SurahError) {
+                  } else if (state is DoaError) {
                     return Center(
                       child: Text(
                         state.errorMessage,
                         style: const TextStyle(color: Colors.red),
                       ),
                     );
-                  } else if (state is SurahLoaded) {
-                    List<DataListSurah> listSurat = state.listSurah;
+                  } else if (state is DoaLoaded) {
+                    List<DoaModel> listSurat = state.listDoa;
                     return Expanded(
                       child: ListView.builder(
                         itemCount: listSurat.length,
                         itemBuilder: (context, index) {
                           return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        ListTile(
-                                            leading: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12,
-                                                      vertical: 8),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(100),
-                                                border: Border.all(
-                                                  color: Coloring.primary,
-                                                  width: 2,
-                                                ),
-                                              ),
-                                              child: Text('${index + 1}'),
-                                            ),
-                                            title: Text(
-                                              listSurat[index].namaLatin,
-                                              style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontFamily: Fonts.POPPINS,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                            subtitle: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    listSurat[index]
-                                                        .tempatTurun,
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontFamily: Fonts.POPPINS,
-                                                      color: Coloring.tertiary,
-                                                    ),
-                                                  ),
-                                                  const SizedBox(width: 10),
-                                                  const Text('•',
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontFamily:
-                                                            Fonts.POPPINS,
-                                                        color:
-                                                            Coloring.tertiary,
-                                                      )),
-                                                  const SizedBox(width: 10),
-                                                  Text(
-                                                      '${listSurat[index].jumlahAyat} ayat',
-                                                      style: const TextStyle(
-                                                        fontSize: 12,
-                                                        fontFamily:
-                                                            Fonts.POPPINS,
-                                                        color:
-                                                            Coloring.tertiary,
-                                                      )),
-                                                ])),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      listSurat[index].nama,
-                                      style: const TextStyle(
-                                          fontSize: 20,
+                              ListTile(
+                                // leading: Container(
+                                //   padding: const EdgeInsets.symmetric(
+                                //       horizontal: 12, vertical: 8),
+                                //   decoration: BoxDecoration(
+                                //     color: Colors.white,
+                                //     borderRadius: BorderRadius.circular(100),
+                                //     border: Border.all(
+                                //       color: Coloring.primary,
+                                //       width: 2,
+                                //     ),
+                                //   ),
+                                //   child: Text('${index + 1}'),
+                                // ),
+                                title: Text(
+                                  listSurat[index].nama,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontFamily: Fonts.POPPINS,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                                // subtitle: Container(
+                                //   padding:const EdgeInsets.symmetric(horizontal: 8),
+                                //   width: MediaQuery.of(context).size.width/6,
+                                //   height: 20,
+                                //   decoration: BoxDecoration(
+                                //     color: Coloring.secondary,
+                                //     borderRadius: BorderRadius.circular(20),
+                                //   ),
+                                //   child: Text(
+                                //     listSurat[index].tag,
+                                //     style: const TextStyle(
+                                //       fontSize: 12,
+                                //       fontFamily: Fonts.POPPINS,
+                                //       color: Coloring.primary,
+                                //     ),
+                                //   ),
+                                // ),
+                              ),
+                              Text(
+                                listSurat[index].ar,
+                                textAlign: TextAlign.right,
+                                style: const TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: Fonts.POPPINS,
+                                    color: Coloring.primary,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              Text(
+                                listSurat[index].tr,
+                                textAlign: TextAlign.left,
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: Fonts.POPPINS,
+                                    color: Colors.black),
+                              ),
+                              Text(
+                                'Arti: "${listSurat[index].idn}"',
+                                style: const TextStyle(
+                                    fontSize: 12,
+                                    fontFamily: Fonts.POPPINS,
+                                    color: Coloring.tertiary),
+                              ),
+                              listSurat[index].tag != ''
+                                  ? Container(
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 12),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 3),
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 24,
+                                      decoration: BoxDecoration(
+                                        color: Coloring.secondary,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Text(
+                                        listSurat[index].tag,
+                                        style: const TextStyle(
+                                          fontSize: 12,
                                           fontFamily: Fonts.POPPINS,
                                           color: Coloring.primary,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                        ),
+                                      ),
+                                    )
+                                  : Container(),
                               if (index < listSurat.length - 1) const Divider(),
                             ],
                           );
@@ -170,6 +176,7 @@ class DoaScreen extends StatelessWidget {
           ),
         ),
       ),
+   
     );
   }
 }

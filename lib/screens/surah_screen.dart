@@ -11,8 +11,8 @@ class SurahScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SurahBloc(SurahApiServices())
-        ..add(FetchSurahEvent()), // Menambahkan event FetchSurahEvent
+      create: (context) =>
+          SurahBloc(SurahApiServices())..add(FetchSurahEvent()),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
@@ -27,9 +27,9 @@ class SurahScreen extends StatelessWidget {
                 decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(
-                        'assets/images/banner-quran.png'), // Ganti dengan path gambar Anda
+                        'assets/images/banner-quran.png'), 
                     fit: BoxFit
-                        .fill, // Mengatur bagaimana gambar memenuhi area Container
+                        .fill, 
                   ),
                 ),
                 child: const Text(
@@ -51,6 +51,10 @@ class SurahScreen extends StatelessWidget {
                   color: Coloring.primary,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+              const Divider(
+                thickness: 3,
+                color: Coloring.primary,
               ),
               const SizedBox(height: 10),
               BlocBuilder<SurahBloc, SurahState>(

@@ -6,13 +6,13 @@ part 'surah_event.dart';
 part 'surah_state.dart';
 
 class SurahBloc extends Bloc<SurahEvent, SurahState> {
-  final SurahApiServices _doaApiServices;
+  final SurahApiServices _surahApiServices;
 
-  SurahBloc(this._doaApiServices) : super(SurahInitial()) {
+  SurahBloc(this._surahApiServices) : super(SurahInitial()) {
     on<FetchSurahEvent>((event, emit) async {
       try {
         emit(SurahLoading());
-        final List<DataListSurah> listSurah = await _doaApiServices.fetchAllSurat();
+        final List<DataListSurah> listSurah = await _surahApiServices.fetchAllSurat();
 
         if (listSurah.isNotEmpty) {
           emit(SurahLoaded(listSurah));

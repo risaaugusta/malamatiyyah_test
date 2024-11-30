@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:r_muslim/models/list_surah_model.dart';
+import 'package:r_muslim/screens/detail_surah_screen.dart';
 import 'package:r_muslim/services/surah_api_services.dart';
 import 'package:r_muslim/bloc/surah/surah_bloc.dart';
 import 'package:r_muslim/style/style.dart';
@@ -26,10 +27,8 @@ class SurahScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/banner-quran.png'), 
-                    fit: BoxFit
-                        .fill, 
+                    image: AssetImage('assets/images/banner-quran.png'),
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: const Text(
@@ -76,88 +75,101 @@ class SurahScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return Column(
                             children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        ListTile(
-                                            leading: Container(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 12,
-                                                      vertical: 8),
-                                              decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(100),
-                                                border: Border.all(
-                                                  color: Coloring.primary,
-                                                  width: 2,
-                                                ),
-                                              ),
-                                              child: Text('${index + 1}'),
-                                            ),
-                                            title: Text(
-                                              listSurat[index].namaLatin,
-                                              style: const TextStyle(
-                                                  fontSize: 16,
-                                                  fontFamily: Fonts.POPPINS,
-                                                  color: Colors.black,
-                                                  fontWeight: FontWeight.w700),
-                                            ),
-                                            subtitle: Row(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    listSurat[index]
-                                                        .tempatTurun,
-                                                    style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontFamily: Fonts.POPPINS,
-                                                      color: Coloring.tertiary,
-                                                    ),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                      builder: (context) => DetailSurahScreen(surahId: index+1, namaSurah: listSurat[index].namaLatin),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          ListTile(
+                                              leading: Container(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 12,
+                                                        vertical: 8),
+                                                decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          100),
+                                                  border: Border.all(
+                                                    color: Coloring.primary,
+                                                    width: 2,
                                                   ),
-                                                  const SizedBox(width: 10),
-                                                  const Text('•',
-                                                      style: TextStyle(
-                                                        fontSize: 16,
-                                                        fontFamily:
-                                                            Fonts.POPPINS,
-                                                        color:
-                                                            Coloring.tertiary,
-                                                      )),
-                                                  const SizedBox(width: 10),
-                                                  Text(
-                                                      '${listSurat[index].jumlahAyat} ayat',
+                                                ),
+                                                child: Text('${index + 1}'),
+                                              ),
+                                              title: Text(
+                                                listSurat[index].namaLatin,
+                                                style: const TextStyle(
+                                                    fontSize: 16,
+                                                    fontFamily: Fonts.POPPINS,
+                                                    color: Colors.black,
+                                                    fontWeight:
+                                                        FontWeight.w700),
+                                              ),
+                                              subtitle: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      listSurat[index]
+                                                          .tempatTurun,
                                                       style: const TextStyle(
                                                         fontSize: 12,
                                                         fontFamily:
                                                             Fonts.POPPINS,
                                                         color:
                                                             Coloring.tertiary,
-                                                      )),
-                                                ])),
-                                      ],
+                                                      ),
+                                                    ),
+                                                    const SizedBox(width: 10),
+                                                    const Text('•',
+                                                        style: TextStyle(
+                                                          fontSize: 16,
+                                                          fontFamily:
+                                                              Fonts.POPPINS,
+                                                          color:
+                                                              Coloring.tertiary,
+                                                        )),
+                                                    const SizedBox(width: 10),
+                                                    Text(
+                                                        '${listSurat[index].jumlahAyat} ayat',
+                                                        style: const TextStyle(
+                                                          fontSize: 12,
+                                                          fontFamily:
+                                                              Fonts.POPPINS,
+                                                          color:
+                                                              Coloring.tertiary,
+                                                        )),
+                                                  ])),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  SizedBox(
-                                    width: 100,
-                                    child: Text(
-                                      listSurat[index].nama,
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          fontFamily: Fonts.POPPINS,
-                                          color: Coloring.primary,
-                                          fontWeight: FontWeight.w700),
+                                    SizedBox(
+                                      width: 100,
+                                      child: Text(
+                                        listSurat[index].nama,
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontFamily: Fonts.POPPINS,
+                                            color: Coloring.primary,
+                                            fontWeight: FontWeight.w700),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                               if (index < listSurat.length - 1) const Divider(),
                             ],

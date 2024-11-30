@@ -122,7 +122,7 @@ class DoaScreen extends StatelessWidget {
                                     fontSize: 20,
                                     fontFamily: Fonts.POPPINS,
                                     color: Coloring.primary,
-                                    fontWeight: FontWeight.w700),
+                                ),
                               ),
                               Text(
                                 listDoa[index].tr,

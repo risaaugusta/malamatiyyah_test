@@ -35,9 +35,8 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         leading: null,
         title: const Text(
-          // _titles[_selectedIndex],
           'Malamatiyyah',
-          style: const TextStyle(
+          style: TextStyle(
               color: Colors.black,
               fontFamily: Fonts.POPPINS,
               fontSize: 24,
@@ -64,18 +63,18 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         automaticallyImplyLeading: false,
       ),
-      body: _selectedIndex == 0 
+      body: _selectedIndex == 0
           ? const SurahScreen()
           : _selectedIndex == 1
-          ? const DoaScreen()
-          : _selectedIndex == 2
-          ? const EbooksScreen()
-          : Center(
-              child: Text(
-                'Content for ${_titles[_selectedIndex]}',
-                style: TextStyle(fontSize: 24),
-              ),
-            ),
+              ? const DoaScreen()
+              : _selectedIndex == 2
+                  ? const EbooksScreen()
+                  : Center(
+                      child: Text(
+                        'Content for ${_titles[_selectedIndex]}',
+                        style: TextStyle(fontSize: 24),
+                      ),
+                    ),
       bottomNavigationBar: BottomNavigationBar(
         useLegacyColorScheme: false,
         backgroundColor: Colors.white,

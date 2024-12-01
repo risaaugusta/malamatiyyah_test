@@ -1,21 +1,21 @@
 import 'package:dio/dio.dart';
-import 'package:r_muslim/models/ebooks_model.dart';
+import 'package:r_muslim/models/videos_model.dart';
 
-class EbooksApiServices {
+class VideosApiServices {
   final Dio _dio = Dio();
 
-  Future<List<DataEbooks>> fetchAllEbooks() async {
+  Future<List<DataVideos>> fetchAllVideos() async {
   try {
-    final response = await _dio.get('https://api3.islamhouse.com/v3/paV29H2gm56kvLPy/main/books/id/id/1/25/json');
+    final response = await _dio.get('https://api3.islamhouse.com/v3/paV29H2gm56kvLPy/main/videos/id/id/1/25/json');
 
     if (response.statusCode == 200) {
       if (response.data is Map<String, dynamic>) {
         List<dynamic> data = response.data['data'];
 
-        print('res ebooks => $data');
+        print('res videos => $data');
 
-        List<DataEbooks> listEbooks = data.map((json) => DataEbooks.fromJson(json)).toList();
-        return listEbooks;
+        List<DataVideos> listVideos = data.map((json) => DataVideos.fromJson(json)).toList();
+        return listVideos;
       } else {
         throw Exception('Data tidak valid');
       }

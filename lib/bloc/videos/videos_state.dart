@@ -7,9 +7,9 @@ class VideosInitial extends VideosState {}
 class VideosLoading extends VideosState {}
 
 class VideosLoaded extends VideosState {
-  final List<DataVideos> listEbooks;
+  final List<DataVideos> listVideos;
 
-  VideosLoaded(this.listEbooks);
+  VideosLoaded(this.listVideos);
 }
 
 class VideosError extends VideosState {

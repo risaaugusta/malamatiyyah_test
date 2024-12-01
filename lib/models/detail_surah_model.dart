@@ -36,8 +36,8 @@ class Data {
   String deskripsi;
   Map<String, String> audioFull;
   List<Ayat> ayat;
-  SuratSelanjutnya suratSelanjutnya;
-  bool suratSebelumnya;
+  dynamic suratSelanjutnya;
+  dynamic suratSebelumnya;
 
   Data({
     required this.nomor,
@@ -66,8 +66,16 @@ class Data {
       ayat: (json['ayat'] as List)
           .map((ayatJson) => Ayat.fromJson(ayatJson))
           .toList(),
-      suratSelanjutnya: SuratSelanjutnya.fromJson(json['suratSelanjutnya']),
-      suratSebelumnya: json['suratSebelumnya'] ?? false,
+      suratSelanjutnya: json['suratSelanjutnya'] == false
+          ? false
+          : json['suratSelanjutnya'] != null
+              ? SuratSelanjutnya.fromJson(json['suratSelanjutnya'])
+              : null,
+      suratSebelumnya: json['suratSebelumnya'] == false
+          ? false
+          : json['suratSebelumnya'] != null
+              ? SuratSelanjutnya.fromJson(json['suratSebelumnya'])
+              : null,
     );
   }
 
@@ -82,8 +90,10 @@ class Data {
       'deskripsi': deskripsi,
       'audioFull': audioFull,
       'ayat': ayat.map((ayat) => ayat.toJson()).toList(),
-      'suratSelanjutnya': suratSelanjutnya.toJson(),
-      'suratSebelumnya': suratSebelumnya,
+      'suratSelanjutnya':
+          suratSelanjutnya == false ? false : suratSelanjutnya?.toJson(),
+      'suratSebelumnya':
+          suratSebelumnya == false ? false : suratSebelumnya?.toJson(),
     };
   }
 }

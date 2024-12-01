@@ -27,7 +27,7 @@ class DataVideos {
   int id;
   int sourceId;
   String title;
-  Type type;
+  String type;
   int addDate;
   int updateDate;
   String description;
@@ -150,7 +150,7 @@ class Attachment {
 class PreparedBy {
   int id;
   int sourceId;
-  String title;
+  String? title;
   String type;
   String kind;
   dynamic description;

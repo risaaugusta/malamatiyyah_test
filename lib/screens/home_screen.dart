@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:r_muslim/screens/doa_screen.dart';
 import 'package:r_muslim/screens/ebooks_screen.dart';
 import 'package:r_muslim/screens/surah_screen.dart';
+import 'package:r_muslim/screens/videos_screen.dart';
 import 'package:r_muslim/style/style.dart';
 import 'package:r_muslim/bloc/surah/surah_bloc.dart'; // Pastikan import Bloc
 import 'package:r_muslim/services/surah_api_services.dart';
@@ -69,12 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ? const DoaScreen()
               : _selectedIndex == 2
                   ? const EbooksScreen()
-                  : Center(
-                      child: Text(
-                        'Content for ${_titles[_selectedIndex]}',
-                        style: TextStyle(fontSize: 24),
-                      ),
-                    ),
+                  : const VideosScreen(),
       bottomNavigationBar: BottomNavigationBar(
         useLegacyColorScheme: false,
         backgroundColor: Colors.white,

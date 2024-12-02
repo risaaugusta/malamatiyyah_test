@@ -3,6 +3,7 @@ import 'package:r_muslim/models/detail_surah_model.dart';
 import 'package:r_muslim/screens/home_screen.dart';
 import 'package:r_muslim/services/surah_api_services.dart';
 import 'package:r_muslim/style/style.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 class DetailSurahScreen extends StatefulWidget {
   final int surahId;
@@ -21,10 +22,26 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
   String _errorMessage = '';
   late SurahApiServices _surahApiServices;
 
+  late AudioPlayer player = AudioPlayer();
+  String audio = '';
+  bool _isPlaying = false;
+
   @override
   void initState() {
     super.initState();
     _detailSurahFuture = _fetchDetailSurah(widget.surahId);
+    player = AudioPlayer();
+    player.setReleaseMode(ReleaseMode.stop);
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await player.setSource(AssetSource(audio));
+      await player.resume();
+    });
+  }
+
+  @override
+  void dispose() {
+    player.dispose();
+    super.dispose();
   }
 
   Future<Data> _fetchDetailSurah(int id) async {
@@ -41,6 +58,20 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
       });
       rethrow;
     }
+  }
+
+  void _togglePlayPause() async {
+    if (_isPlaying) {
+      await player.stop();
+    } else {
+      if (audio.isNotEmpty) {
+        final audioUrl = audio;
+        await player.play(UrlSource(audioUrl));
+      }
+    }
+    setState(() {
+      _isPlaying = !_isPlaying;
+    });
   }
 
   @override
@@ -159,40 +190,41 @@ class _DetailSurahScreenState extends State<DetailSurahScreen> {
                         ),
                       ),
                       onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Audio Surah'),
-                              content: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: data.audioFull.entries
-                                    .map((entry) => ListTile(
-                                          title: Text(entry.key),
-                                          subtitle: Text(entry.value),
-                                        ))
-                                    .toList(),
-                              ),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: const Text('Tutup'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
+                        print('mp3 => ${data.audioFull.entries.first.value}');
+                        if (data.audioFull.isNotEmpty) {
+                          final firstAudioEntry = data.audioFull.entries.first;
+
+                          setState(() {
+                            audio = firstAudioEntry.value; // Set URL audio
+                          });
+
+                          _togglePlayPause(); // Toggle play/pause
+                        }
                       },
-                      child: const Text('Lihat Audio',
-                          style: TextStyle(
-                              fontSize: 12,
-                              fontFamily: Fonts.POPPINS,
-                              color: Coloring.primary,
-                              fontWeight: FontWeight.w900)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            _isPlaying == true
+                                ? Icons.pause
+                                : Icons
+                                    .play_arrow,  
+                            color: Coloring.primary,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            _isPlaying == true
+                                ? 'Pause Audio'
+                                : 'Play Audio',  
+                            style: const TextStyle(
+                                fontSize: 12,
+                                fontFamily: Fonts.POPPINS,
+                                color: Coloring.primary,
+                                fontWeight: FontWeight.w900),
+                          ),
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 16.0),
                   ],
                   ...data.ayat.map((ayat) {
                     return Padding(

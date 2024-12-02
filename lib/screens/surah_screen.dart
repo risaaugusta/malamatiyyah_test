@@ -6,8 +6,15 @@ import 'package:r_muslim/services/surah_api_services.dart';
 import 'package:r_muslim/bloc/surah/surah_bloc.dart';
 import 'package:r_muslim/style/style.dart';
 
-class SurahScreen extends StatelessWidget {
+class SurahScreen extends StatefulWidget {
   const SurahScreen({super.key});
+
+  @override
+  State<SurahScreen> createState() => _SurahScreenState();
+}
+
+class _SurahScreenState extends State<SurahScreen> {
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +86,10 @@ class SurahScreen extends StatelessWidget {
                                 onTap: () {
                                   Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                      builder: (context) => DetailSurahScreen(surahId: index+1, namaSurah: listSurat[index].namaLatin),
+                                      builder: (context) => DetailSurahScreen(
+                                          surahId: index + 1,
+                                          namaSurah:
+                                              listSurat[index].namaLatin),
                                     ),
                                   );
                                 },

@@ -59,11 +59,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
                       child: SvgPicture.asset(
-                        width: 30,
-                        height: 30,
-                        'images/google-icon.svg',
+                        width: 15,
+                        height: 15,
+                        'assets/images/google-icon.svg',
                       ),
                     ),
                     const Text(

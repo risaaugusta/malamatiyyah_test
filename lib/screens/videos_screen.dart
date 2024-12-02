@@ -146,7 +146,9 @@ class _VideosScreenState extends State<VideosScreen> {
                                                 ),
                                                 const SizedBox(width: 8),
                                                 Text(
-                                                  'Download $extensionType',
+                                             listVideos[index].attachments.length == 1 ?  'Download $extensionType'  :  'Download $extensionType [${listVideos[index]
+                                            .attachments[attachmentIndex]
+                                            .order++}]',
                                                   style: const TextStyle(
                                                     fontSize: 12,
                                                     fontFamily: Fonts.POPPINS,

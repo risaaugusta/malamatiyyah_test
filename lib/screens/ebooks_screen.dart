@@ -93,64 +93,71 @@ class _EbooksScreenState extends State<EbooksScreen> {
                                   ),
                                   const SizedBox(height: 8),
                                   SizedBox(
+                                    height: 40,
                                     width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    child: ElevatedButton(
-                                      onPressed: () async {
+                                        MediaQuery.of(context).size.width,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal, 
+                                      itemCount:
+                                          listEbooks[index].attachments.length,
+                                      itemBuilder: (context, attachmentIndex) {
                                         final url = listEbooks[index]
-                                            .attachments[index]
+                                            .attachments[attachmentIndex]
                                             .url;
-                                        print('url download => $url');
-                                        if (await canLaunch(url)) {
-                                          await launch(url);
-                                        } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                                content: Text(
-                                                    'Could not launch the URL')),
-                                          );
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Coloring.primary,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              8),  
-                                        ),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 3),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const Icon(
-                                            Icons.file_download,
-                                            color: Colors.white,
-                                          ),
-                                          const SizedBox(width: 8),
-                                          listEbooks[index].attachments.length >
-                                                  1
-                                              ? Text(
-                                                  'Download ${listEbooks[index].attachments[0].extensionType}',
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontFamily: Fonts.POPPINS,
-                                                      color: Colors.white),
-                                                )
-                                              : Text(
-                                                  'Download ${listEbooks[index].attachments[0].extensionType}',
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontFamily: Fonts.POPPINS,
-                                                      color: Colors.white),
+                                        final extensionType = listEbooks[index]
+                                            .attachments[attachmentIndex]
+                                            .extensionType;
+
+                                        return Container(
+                                          margin: const EdgeInsets.only(right: 10),
+                                          child: ElevatedButton(
+                                            onPressed: () async {
+                                              print('url download => $url');
+                                              if (await canLaunch(url)) {
+                                                await launch(url);
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        'Could not launch the URL'),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Coloring.primary,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              padding: const EdgeInsets.symmetric(
+                                                  horizontal: 8, vertical: 3),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                const Icon(
+                                                  Icons.file_download,
+                                                  color: Colors.white,
                                                 ),
-                                        ],
-                                      ),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  'Download $extensionType',
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontFamily: Fonts.POPPINS,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   )
-                                
                                 ],
                               ),
                             ),

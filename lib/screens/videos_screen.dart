@@ -93,65 +93,73 @@ class _VideosScreenState extends State<VideosScreen> {
                                   ),
                                   const SizedBox(height: 8),
                                   SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width / 2.5,
-                                    child: ElevatedButton(
-                                      onPressed: () async {
+                                    height: listVideos[index].attachments.length == 1 ? 50 : MediaQuery.of(context).size.height/1.8,
+                                    width: MediaQuery.of(context).size.width/2,
+                                    child: ListView.builder(
+                                      // scrollDirection: Axis.horizontal,
+                                      itemCount:
+                                          listVideos[index].attachments.length,
+                                      itemBuilder: (context, attachmentIndex) {
                                         final url = listVideos[index]
-                                            .attachments[index]
+                                            .attachments[attachmentIndex]
                                             .url;
-                                        print('url download => $url');
-                                        if (await canLaunch(url)) {
-                                          await launch(url);
-                                        } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                                content: Text(
-                                                    'Could not launch the URL')),
-                                          );
-                                        }
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: Coloring.primary,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              8),  
-                                        ),
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 8, vertical: 3),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: [
-                                          const Icon(
-                                            Icons.file_download,
-                                            color: Colors.white,
-                                          ),
-                                          const SizedBox(width: 8),
-                                          listVideos[index].attachments.length >
-                                                  1
-                                              ? Text(
-                                                  'Download ${listVideos[index].attachments[0].extensionType}',
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontFamily: Fonts.POPPINS,
-                                                      color: Colors.white),
-                                                )
-                                              : Text(
-                                                  'Download ${listVideos[index].attachments[0].extensionType}',
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      fontFamily: Fonts.POPPINS,
-                                                      color: Colors.white),
+                                        final extensionType = listVideos[index]
+                                            .attachments[attachmentIndex]
+                                            .extensionType;
+
+                                        return Container(
+                                          margin:
+                                              const EdgeInsets.only(right: 10),
+                                          child: ElevatedButton(
+                                            onPressed: () async {
+                                              print('url download => $url');
+                                              if (await canLaunch(url)) {
+                                                await launch(url);
+                                              } else {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  const SnackBar(
+                                                    content: Text(
+                                                        'Could not launch the URL'),
+                                                  ),
+                                                );
+                                              }
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor: Coloring.primary,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                              ),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 3),
+                                            ),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                const Icon(
+                                                  Icons.file_download,
+                                                  color: Colors.white,
                                                 ),
-                                        ],
-                                      ),
+                                                const SizedBox(width: 8),
+                                                Text(
+                                                  'Download $extensionType',
+                                                  style: const TextStyle(
+                                                    fontSize: 12,
+                                                    fontFamily: Fonts.POPPINS,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
-                                  )
-                                
-                                ],
+                                  )],
                               ),
                             ),
                           );

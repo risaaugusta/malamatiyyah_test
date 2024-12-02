@@ -94,10 +94,9 @@ class _EbooksScreenState extends State<EbooksScreen> {
                                   const SizedBox(height: 8),
                                   SizedBox(
                                     height: 40,
-                                    width:
-                                        MediaQuery.of(context).size.width,
+                                    width: MediaQuery.of(context).size.width,
                                     child: ListView.builder(
-                                      scrollDirection: Axis.horizontal, 
+                                      scrollDirection: Axis.horizontal,
                                       itemCount:
                                           listEbooks[index].attachments.length,
                                       itemBuilder: (context, attachmentIndex) {
@@ -109,7 +108,8 @@ class _EbooksScreenState extends State<EbooksScreen> {
                                             .extensionType;
 
                                         return Container(
-                                          margin: const EdgeInsets.only(right: 10),
+                                          margin:
+                                              const EdgeInsets.only(right: 10),
                                           child: ElevatedButton(
                                             onPressed: () async {
                                               print('url download => $url');
@@ -131,8 +131,10 @@ class _EbooksScreenState extends State<EbooksScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(8),
                                               ),
-                                              padding: const EdgeInsets.symmetric(
-                                                  horizontal: 8, vertical: 3),
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 8,
+                                                      vertical: 3),
                                             ),
                                             child: Row(
                                               mainAxisAlignment:

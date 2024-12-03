@@ -8,5 +8,4 @@ Islamic app for recruitment test purpose ©Risa Augusta Murti
 
 # API Islam House v3
 — link postman : https://documenter.getpostman.com/view/7929737/TzkyMfPc
-
 — link web referensi : https://islamic.ihsanfirdaus.com/

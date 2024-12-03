@@ -1,15 +1,11 @@
 // home_screen.dart
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter/material.dart'; 
 import 'package:r_muslim/screens/doa_screen.dart';
 import 'package:r_muslim/screens/ebooks_screen.dart';
 import 'package:r_muslim/screens/surah_screen.dart';
 import 'package:r_muslim/screens/videos_screen.dart';
-import 'package:r_muslim/style/style.dart';
-import 'package:r_muslim/bloc/surah/surah_bloc.dart'; // Pastikan import Bloc
-import 'package:r_muslim/services/surah_api_services.dart';
-import 'package:flutter_svg/flutter_svg.dart'; // Pastikan api service sudah ada
-
+import 'package:r_muslim/style/style.dart'; 
+import 'package:flutter_svg/flutter_svg.dart';  
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 

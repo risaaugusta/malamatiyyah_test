@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "994500705848",
+    "project_id": "malamatiyyah-4ef41",
+    "storage_bucket": "malamatiyyah-4ef41.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:994500705848:android:df5ef79fcc52898adb30cd",
+        "android_client_info": {
+          "package_name": "com.risa.malamatiyyah"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeMmpU6EFQHdYlOPY7pkB2ugLuJQG6x3I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

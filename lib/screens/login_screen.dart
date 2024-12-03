@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:r_muslim/screens/home_screen.dart';
 import 'package:r_muslim/style/style.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -12,6 +14,38 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  ValueNotifier<UserCredential?> userCredential =
+      ValueNotifier<UserCredential?>(null);
+
+  Future<UserCredential?> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } on Exception catch (e) {
+      print('Exception: $e');
+      return null;
+    }
+  }
+
+  Future<bool> signOutFromGoogle() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      await GoogleSignIn().signOut();
+      return true;
+    } on Exception catch (_) {
+      return false;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +72,12 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  final UserCredential? result = await signInWithGoogle();
+                  if (result != null) {
+                    userCredential.value = result;
+                  }
+                },
                 style: ButtonStyle(
                   backgroundColor: WidgetStateProperty.resolveWith<Color>(
                     (Set<WidgetState> states) {
@@ -59,7 +98,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 8),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 8),
                       child: SvgPicture.asset(
                         width: 15,
                         height: 15,

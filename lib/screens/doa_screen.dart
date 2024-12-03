@@ -11,7 +11,7 @@ class DoaScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => DoaBloc(DoaApiServices())..add(FetchDoaEvent()),
+      create: (context) => DoaBloc(DoaApiServices())..add(const FetchDoaEvent()),
       child: Scaffold(
         backgroundColor: Colors.white,
         body: Padding(
@@ -90,7 +90,7 @@ class DoaScreen extends StatelessWidget {
                                 //   child: Text('${index + 1}'),
                                 // ),
                                 title: Text(
-                                  listDoa[index].nama,
+                                  listDoa[index].nama, 
                                   style: const TextStyle(
                                       fontSize: 16,
                                       fontFamily: Fonts.POPPINS,

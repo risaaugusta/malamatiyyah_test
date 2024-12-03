@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   fontWeight: FontWeight.w800),
             ),
             const Text(
-              'Islamic app for your daily faith booster',
+              'Aplikasi islami untuk penyemangat iman harian Anda',
               style: TextStyle(fontFamily: Fonts.POPPINS, fontSize: 12),
             ),
             const SizedBox(height: 20),
@@ -69,55 +69,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 height: MediaQuery.of(context).size.height / 2,
                 width: MediaQuery.of(context).size.width,
                 child: Image.asset('assets/images/splash.png')),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-              child: ElevatedButton(
-                onPressed: () async {
-                  final UserCredential? result = await signInWithGoogle();
-                  if (result != null) {
-                    userCredential.value = result;
-                  }
-                },
-                style: ButtonStyle(
-                  backgroundColor: WidgetStateProperty.resolveWith<Color>(
-                    (Set<WidgetState> states) {
-                      return Coloring.secondary;
-                    },
-                  ),
-                  elevation: WidgetStateProperty.all(0),
-                  minimumSize:
-                      WidgetStateProperty.all(const Size(double.infinity, 40)),
-                  shape: WidgetStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 8),
-                      child: SvgPicture.asset(
-                        width: 15,
-                        height: 15,
-                        'assets/images/google-icon.svg',
-                      ),
-                    ),
-                    const Text(
-                      "Login with Google",
-                      style: TextStyle(
-                        fontFamily: Fonts.POPPINS,
-                        color: Coloring.primary,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
               child: ElevatedButton(
@@ -144,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 child: const Text(
-                  "Login as guest",
+                  "Mulai",
                   style: TextStyle(
                     fontFamily: Fonts.POPPINS,
                     color: Coloring.primary,

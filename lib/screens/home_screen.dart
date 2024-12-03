@@ -1,7 +1,6 @@
-// home_screen.dart
-import 'package:flutter/material.dart'; 
+import 'package:flutter/material.dart';
 import 'package:r_muslim/screens/doa_screen.dart';
-import 'package:r_muslim/screens/ebooks_screen.dart';
+import 'package:r_muslim/screens/ebooks_screen_draft.dart';
 import 'package:r_muslim/screens/surah_screen.dart';
 import 'package:r_muslim/screens/videos_screen.dart';
 import 'package:r_muslim/style/style.dart'; 
@@ -27,9 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.amber,
-      appBar: AppBar(
+      resizeToAvoidBottomInset: false, 
+      appBar:  _selectedIndex == 2 || _selectedIndex == 3 ? null : AppBar(
         leading: null,
         title: const Text(
           'Malamatiyyah',
@@ -40,24 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
               fontWeight: FontWeight.w900),
         ),
         backgroundColor: Colors.white,
-        actions: [
-          Container(
-            margin: const EdgeInsets.only(right: 16),
-            decoration: BoxDecoration(
-              color: Coloring.secondary,
-              borderRadius: BorderRadius.circular(50),
-            ),
-            child: IconButton(
-              icon: SvgPicture.asset(
-                'assets/images/google-icon.svg',
-                height: 20.0,
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        ],
         automaticallyImplyLeading: false,
       ),
       body: _selectedIndex == 0
@@ -65,7 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
           : _selectedIndex == 1
               ? const DoaScreen()
               : _selectedIndex == 2
-                  ? const EbooksScreen()
+                  // ? const EbooksScreen()
+                  ? const EbooksScreenDraft()
                   : const VideosScreen(),
       bottomNavigationBar: BottomNavigationBar(
         useLegacyColorScheme: false,

@@ -1,29 +1,27 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:r_muslim/bloc/ebooks/ebooks_bloc.dart';
 import 'package:r_muslim/bloc/global/global.dart';
-import 'package:r_muslim/bloc/videos/videos_bloc.dart';
-import 'package:r_muslim/models/videos_model.dart';
-import 'package:r_muslim/services/videos_api_services.dart';
+import 'package:r_muslim/models/ebooks_model.dart';
+import 'package:r_muslim/services/ebooks_api_services.dart';
 import 'package:r_muslim/style/style.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_pdfview/flutter_pdfview.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
-class VideosScreen extends StatefulWidget {
-  const VideosScreen({super.key});
+class EbooksScreenDraft extends StatefulWidget {
+  const EbooksScreenDraft({super.key});
 
   @override
-  State<VideosScreen> createState() => _VideosScreenState();
+  State<EbooksScreenDraft> createState() => _EbooksScreenState();
 }
 
-class _VideosScreenState extends State<VideosScreen> {
+class _EbooksScreenState extends State<EbooksScreenDraft> {
   Global global = Global();
   String user = '';
-
+   
   ValueNotifier<User?> userCredential = ValueNotifier<User?>(null);
 
   @override
@@ -59,8 +57,7 @@ class _VideosScreenState extends State<VideosScreen> {
         idToken: googleAuth?.idToken,
       );
 
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
 
       final pref = await SharedPreferences.getInstance();
       pref.setString("email", userCredential.user?.email ?? '');
@@ -100,7 +97,7 @@ class _VideosScreenState extends State<VideosScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          VideosBloc(VideosApiServices())..add(FetchVideosEvent()),
+          EbooksBloc(EbooksApiServices())..add(FetchEbooksEvent()),
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
@@ -144,8 +141,7 @@ class _VideosScreenState extends State<VideosScreen> {
                               if (result != null) {
                                 userCredential.value = result.user;
                                 setState(() {
-                                  user = userCredential.value?.displayName ??
-                                      'User';
+                                  user = userCredential.value?.displayName ?? 'User';
                                   global.email = global.email;
                                 });
                               }
@@ -197,7 +193,7 @@ class _VideosScreenState extends State<VideosScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const Text(
-                'Videos',
+                'Ebooks',
                 style: TextStyle(
                   fontSize: 16,
                   fontFamily: Fonts.POPPINS,
@@ -242,23 +238,25 @@ class _VideosScreenState extends State<VideosScreen> {
                 color: Coloring.primary,
               ),
               const SizedBox(height: 10),
-              BlocBuilder<VideosBloc, VideosState>(
+              BlocBuilder<EbooksBloc, EbooksState>(
                 builder: (context, state) {
-                  if (state is VideosLoading) {
+                  if (state is EbooksLoading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (state is VideosError) {
+                  } else if (state is EbooksError) {
                     return Center(
                       child: Text(
                         state.errorMessage,
                         style: const TextStyle(color: Colors.red),
                       ),
                     );
-                  } else if (state is VideosLoaded) {
-                    List<DataVideos> listVideos = state.listVideos;
+                  } else if (state is EbooksLoaded) {
+                    List<DataEbooks> listEbooks = state.listEbooks;
+
                     return Expanded(
                       child: ListView.builder(
-                        itemCount: user == '' ? 5 : listVideos.length,
+                        itemCount: user == '' ? 5 : listEbooks.length,
                         itemBuilder: (context, index) {
+                          final ebook = listEbooks[index];
                           return Card(
                             color: Colors.white,
                             surfaceTintColor: Colors.white,
@@ -274,7 +272,7 @@ class _VideosScreenState extends State<VideosScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    listVideos[index].title,
+                                    ebook.title,
                                     style: const TextStyle(
                                         fontSize: 16,
                                         fontFamily: Fonts.POPPINS,
@@ -283,7 +281,7 @@ class _VideosScreenState extends State<VideosScreen> {
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    listVideos[index].description,
+                                    ebook.description,
                                     textAlign: TextAlign.left,
                                     style: const TextStyle(
                                         fontSize: 14,
@@ -293,24 +291,15 @@ class _VideosScreenState extends State<VideosScreen> {
                                   ),
                                   const SizedBox(height: 8),
                                   SizedBox(
-                                    height: listVideos[index]
-                                                .attachments
-                                                .length ==
-                                            1
-                                        ? 50
-                                        : MediaQuery.of(context).size.height /
-                                            1.8,
-                                    width:
-                                        MediaQuery.of(context).size.width / 2,
+                                    height: 40,
+                                    width: MediaQuery.of(context).size.width,
                                     child: ListView.builder(
-                                      // scrollDirection: Axis.horizontal,
-                                      itemCount:
-                                          listVideos[index].attachments.length,
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: ebook.attachments.length,
                                       itemBuilder: (context, attachmentIndex) {
-                                        final url = listVideos[index]
-                                            .attachments[attachmentIndex]
-                                            .url;
-                                        final extensionType = listVideos[index]
+                                        final url = ebook
+                                            .attachments[attachmentIndex].url;
+                                        final extensionType = ebook
                                             .attachments[attachmentIndex]
                                             .extensionType;
 
@@ -319,7 +308,6 @@ class _VideosScreenState extends State<VideosScreen> {
                                               const EdgeInsets.only(right: 10),
                                           child: ElevatedButton(
                                             onPressed: () async {
-                                              print('url download => $url');
                                               if (await canLaunch(url)) {
                                                 await launch(url);
                                               } else {
@@ -353,12 +341,7 @@ class _VideosScreenState extends State<VideosScreen> {
                                                 ),
                                                 const SizedBox(width: 8),
                                                 Text(
-                                                  listVideos[index]
-                                                              .attachments
-                                                              .length ==
-                                                          1
-                                                      ? 'Download $extensionType'
-                                                      : 'Download $extensionType [${listVideos[index].attachments[attachmentIndex].order++}]',
+                                                  'Download $extensionType',
                                                   style: const TextStyle(
                                                     fontSize: 12,
                                                     fontFamily: Fonts.POPPINS,

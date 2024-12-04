@@ -1,6 +1,7 @@
 # Malamatiyyah App
  
-Islamic app for recruitment test purpose ©Risa Augusta Murti
+Islamic app for recruitment test purpose 
+code sources belongs to ©Risa Augusta Murti
 
 # App Demo
 https://photos.app.goo.gl/KEmTZyipvg5W5MdJ7
